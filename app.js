@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [width + 1, width + 2, width * 2, width * 2 + 1],
   ];
 
+  // T - Shape
   const tTetromino = [
     [1, width, width + 1, width + 2],
     [1, width + 1, width + 2, width * 2 + 1],
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [1, width, width + 1, width * 2 + 1],
   ];
 
+  // [] - Shape
   const oTetromino = [
     [0, 1, width, width + 1],
     [0, 1, width, width + 1],
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [0, 1, width, width + 1],
   ];
 
+  // I - Shape
   const iTetromino = [
     [1, width + 1, width * 2 + 1, width * 3 + 1],
     [width, width + 1, width + 2, width + 3],
@@ -101,5 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPosition = 4;
       draw();
     }
+  }
+
+  // Move The Tetromino Left, Unless At The Edge Or There Is A Blockage
+  function moveLeft() {
+    undraw();
+    const isAtLeftEdege = current.some(
+      (index) => (currentPosition + index) % width === 0
+    );
+
+    if (!isAtLeftEdege) currentPosition -= 1;
+
+    if (
+      current.some((index) =>
+        squares[currentPosition + index].classList.contains('taken')
+      )
+    ) {
+      currentPosition += 1;
+    }
+
+    draw();
   }
 });
