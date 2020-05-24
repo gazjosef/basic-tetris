@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const width = 10;
 
   //The Tetrominoes
+
+  // L - Shape
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
     [width, width + 1, width + 2, width * 2 + 2],
@@ -14,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [width, width * 2, width * 2 + 1, width * 2 + 2],
   ];
 
+  // Z - Shape
   const zTetromino = [
     [0, width, width + 1, width * 2 + 1],
     [width + 1, width + 2, width * 2, width * 2 + 1],
@@ -51,6 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   let currentPosition = 4;
+
+  // Randomly Select A Tetromino & It's First Rotation
+  let random = Math.floor(Math.random() * theTetrominoes.length);
+  console.log(random);
+
   let current = theTetrominoes[0][0];
 
   // Draw The First Rotation In The First Tetromino
@@ -60,5 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  console.log(theTetrominoes[0][0]);
+  draw();
+  // console.log(theTetrominoes[0][0]);
 });
