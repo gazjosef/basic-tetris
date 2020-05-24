@@ -1,3 +1,4 @@
+/* Grid */
 .grid {
   width: 200px;
   height: 400px;
@@ -10,4 +11,9 @@
   height: 20px;
   width: 20px;
   background-color: red;
+}
+
+/* Tetrominos */
+.tetromino {
+  background-color: blue;
 }
