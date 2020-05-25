@@ -170,4 +170,25 @@ document.addEventListener('DOMContentLoaded', () => {
     current = theTetrominoes[random][currentRotation];
     draw();
   }
+
+  // Shop Up-Next Tetromino In Mini-Grid
+  const displaySquares = document.querySelectorAll('.mini-grid div');
+  const displayWidth = 4;
+  let displayIndex = 0;
+
+  // The Tetrominos Without Rotation
+  const upNextTetrominoes = [
+    [i, displayWidth + i, displayWidth * 2 + 1, 2], // L
+    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], // Z
+    [1, displayWidth, displayWidth + 1, displayWidth + 2], // T
+    [0, 1, displayWidth, displayWidth + 1], // []
+    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1], // I
+  ];
+
+  // Dispay The Shape In The Mini-Grid Display
+  function displayShape() {
+    displaySquares.forEach((square) => {
+      square.classList.remove('tetromino');
+    });
+  }
 });
