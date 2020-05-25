@@ -159,4 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     draw();
   }
+
+  // Rotate The Tetromino
+  function rotate() {
+    undraw();
+    currentRotation++;
+  }
 });
