@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ScoreDisplay = document.querySelector('#score');
   const StartBtn = document.querySelector('#start-button');
   const width = 10;
+  let nextRandom = 0;
 
   //The Tetrominoes
 
@@ -113,10 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
         squares[currentPosition + index].classList.add('taken')
       );
       // Start a new tetromino falling
-      random = Math.floor(Math.random() * theTetrominoes.length);
+      random = nextRandom;
+      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
       current = theTetrominoes[random][currentRotation];
       currentPosition = 4;
       draw();
+      displayShape();
     }
   }
 
@@ -187,8 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dispay The Shape In The Mini-Grid Display
   function displayShape() {
+    // Remove any trace of a Tetromino from the entire grid
     displaySquares.forEach((square) => {
       square.classList.remove('tetromino');
+    });
+    upNextTetrominoes[nextRandom].forEach((index) => {
+      displaySquares[displayIndex + index].classList.add('tetromino');
     });
   }
 });
