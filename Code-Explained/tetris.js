@@ -39,12 +39,14 @@ drawBoard();
 const PIECES = [
   [Z, 'red'],
   [S, 'green'],
-  [T, 'Yello'],
+  [T, 'Yellow'],
   [O, 'Blue'],
   [L, 'Purple'],
   [I, 'Cyan'],
   [J, 'Orange'],
 ];
+
+// Initiate Piece
 
 // The Object Piece
 function Piece(tetromino, color) {
