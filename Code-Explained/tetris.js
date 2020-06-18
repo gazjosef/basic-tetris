@@ -35,6 +35,17 @@ function drawBoard() {
 
 drawBoard();
 
+// Pieces & Their Colors
+const PIECES = [
+  [Z, 'red'],
+  [S, 'green'],
+  [T, 'Yello'],
+  [O, 'Blue'],
+  [L, 'Purple'],
+  [I, 'Cyan'],
+  [J, 'Orange'],
+];
+
 // The Object Piece
 function Piece(tetromino, color) {
   this.tetromino = tetromino;
