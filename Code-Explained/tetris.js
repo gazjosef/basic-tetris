@@ -62,36 +62,71 @@ function Piece(tetromino, color) {
   this.y = 0;
 }
 
-// Draw A Piece To The Board
-Piece.prototype.draw = function () {
+// Fill Function
+Piece.prototype.fill = function (color) {
   for (r = 0; r < this.activeTetromino.length; r++) {
     for (c = 0; c < this.activeTetromino.length; c++) {
       // We draw only occupied squares
       if (this.activeTetromino[r][c]) {
-        drawSquare(this.x + c, this.y + r, this.color);
+        drawSquare(this.x + c, this.y + r, color);
       }
     }
   }
+};
+
+// Draw A Piece To The Board
+Piece.prototype.draw = function () {
+  this.fill(this.color);
 };
 
 // Undraw The Piece
 Piece.prototype.unDraw = function () {
-  for (r = 0; r < this.activeTetromino.length; r++) {
-    for (c = 0; c < this.activeTetromino.length; c++) {
-      // We draw only occupied squares
-      if (this.activeTetromino[r][c]) {
-        drawSquare(this.x + c, this.y + r, VACANT);
-      }
-    }
-  }
+  this.fill(VACANT);
 };
 
-// Move Down The Piece
+// Move Down
 Piece.prototype.moveDown = function () {
   this.unDraw();
   this.y++;
   this.draw();
 };
+
+// Move Left
+Piece.prototype.moveLeft = function () {
+  this.unDraw();
+  this.x--;
+  this.draw();
+};
+
+// Move Right
+Piece.prototype.moveRight = function () {
+  this.unDraw();
+  this.x++;
+  this.draw();
+};
+
+// Rotate Piece
+Piece.prototype.rotate = function () {
+  this.unDraw();
+  this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
+  this.activeTetromino = this.tetromino[this.tetrominoN];
+  this.draw();
+};
+
+// Control The Piece
+document.addEventListener('keydown', CONTROL);
+
+function CONTROL(event) {
+  if (event.keyCode == 37) {
+    p.moveLeft();
+  } else if (event.keyCode == 38) {
+    p.rotate();
+  } else if (event.keyCode == 39) {
+    p.moveRight();
+  } else if (event.keyCode == 40) {
+    p.moveDown();
+  }
+}
 
 // Drop The Piece Every 1sec
 let dropStart = Date.now();
