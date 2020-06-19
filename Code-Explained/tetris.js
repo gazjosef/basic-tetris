@@ -86,45 +86,90 @@ Piece.prototype.unDraw = function () {
 
 // Move Down
 Piece.prototype.moveDown = function () {
-  this.unDraw();
-  this.y++;
-  this.draw();
+  if (!this.collision(0, 1, this.activeTetromino)) {
+    this.unDraw();
+    this.y++;
+    this.draw();
+  } else {
+    // We lock the piece and generate a new piece
+  }
 };
 
 // Move Left
 Piece.prototype.moveLeft = function () {
-  this.unDraw();
-  this.x--;
-  this.draw();
+  if (!this.collision(-1, 0, this.activeTetromino)) {
+    this.unDraw();
+    this.x--;
+    this.draw();
+  }
 };
 
 // Move Right
 Piece.prototype.moveRight = function () {
-  this.unDraw();
-  this.x++;
-  this.draw();
+  if (!this.collision(1, 0, this.activeTetromino)) {
+    this.unDraw();
+    this.x++;
+    this.draw();
+  }
 };
 
 // Rotate Piece
 Piece.prototype.rotate = function () {
-  this.unDraw();
-  this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
-  this.activeTetromino = this.tetromino[this.tetrominoN];
-  this.draw();
+  let nextPattern = this.tetromino[
+    (this.tetrominoN + 1) % this.tetromino.length
+  ];
+  if (!this.collision(1, 0, nextPattern)) {
+    this.unDraw();
+    this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
+    this.activeTetromino = this.tetromino[this.tetrominoN];
+    this.draw();
+  }
 };
 
-// Control The Piece
+// Collision Function
+Piece.prototype.collision = function (x, y, piece) {
+  for (r = 0; r < piece.length; r++) {
+    for (c = 0; c < piece.length; c++) {
+      // If square is empty, we skip it
+      if (!piece[r][c]) {
+        continue;
+      }
+      // Coordinates of the piece after movement
+      let newX = this.x + c + x;
+      let newY = this.y + r + y;
+      // Conditions
+      if (newX < 0 || newX >= COL || newY >= ROW) {
+        return true;
+      }
+      // Skip newY < 0; board[-1] will crush our game
+      if (newY < 0) {
+        continue;
+      }
+      // Check if there is a locked piece on the board
+      if (board[newY][newX] !== VACANT) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+// CONTROL The Piece
 document.addEventListener('keydown', CONTROL);
 
 function CONTROL(event) {
   if (event.keyCode == 37) {
     p.moveLeft();
+    dropStart = Date.now();
   } else if (event.keyCode == 38) {
     p.rotate();
+    dropStart = Date.now();
   } else if (event.keyCode == 39) {
     p.moveRight();
+    dropStart = Date.now();
   } else if (event.keyCode == 40) {
     p.moveDown();
+    dropStart = Date.now();
   }
 }
 
